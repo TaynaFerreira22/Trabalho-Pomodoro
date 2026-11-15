@@ -1,5 +1,4 @@
-"use client";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
 interface AppLayoutProps {
   topBarSlot: ReactNode;
@@ -19,7 +18,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           <h1 className="text-xl font-bold tracking-tight">
             Pomodoro — Gestão de Foco
           </h1>
-          <div className="w-full sm:w-auto min-w-[280px]">{topBarSlot}</div>
+          <div className="w-full sm:w-auto min-w-70">{topBarSlot}</div>
         </div>
       </header>
 

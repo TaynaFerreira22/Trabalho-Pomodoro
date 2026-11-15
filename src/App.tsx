@@ -1,33 +1,14 @@
-"use client";
-import { useState, useSyncExternalStore } from "react";
-import { AppLayout } from "@/components/Layout/AppLayout";
-import { TimerDisplay } from "@/components/Timer/TimerDisplay";
-import { PresetSelector } from "@/components/Presets/PresetSelector";
-import { TaskPanel } from "@/components/Tasks/TaskPanel";
-import { ConfirmDialog } from "@/components/Common/ConfirmDialog";
-import { usePomodoroSession } from "@/hooks/usePomodoroSession";
+import { useState } from "react";
+import { AppLayout } from "./components/Layout/AppLayout";
+import { TimerDisplay } from "./components/Timer/TimerDisplay";
+import { PresetSelector } from "./components/Presets/PresetSelector";
+import { TaskPanel } from "./components/Tasks/TaskPanel";
+import { ConfirmDialog } from "./components/Common/ConfirmDialog";
+import { usePomodoroSession } from "./hooks/usePomodoroSession";
 
-// Função de subscrição estática exigida pelo hook (não requer listeners ativos)
-const subscreverVazio = () => () => {};
-
-export default function Home() {
-  // Retorna false durante o SSR/hidratação inicial e true após a montagem no navegador
-  const isMounted = useSyncExternalStore(
-    subscreverVazio,
-    () => true, // Snapshot de execução no cliente
-    () => false, // Snapshot de execução no servidor (SSR)
-  );
-
+export function App() {
   const [modalEncerrarAberto, setModalEncerrarAberto] = useState(false);
   const session = usePomodoroSession();
-
-  if (!isMounted) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500 font-medium">
-        A carregar temporizador...
-      </div>
-    );
-  }
 
   return (
     <>
@@ -104,3 +85,5 @@ export default function Home() {
     </>
   );
 }
+
+export default App;

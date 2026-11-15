@@ -1,4 +1,3 @@
-"use client";
 export const TaskPanel = () => (
   <aside
     aria-label="Painel de Tarefas"

@@ -1,9 +1,8 @@
-"use client";
 import { useState } from "react";
-import { FaseSessao, StatusSessao } from "@/types";
+import type { FaseSessao, StatusSessao } from "../types";
 
 export const usePomodoroSession = () => {
-  const [tempoRestanteMs, setTempoRestanteMs] = useState(25 * 60 * 1000);
+  const [tempoRestanteMs] = useState(25 * 60 * 1000);
   const [faseAtual, setFaseAtual] = useState<FaseSessao>("foco");
   const [cicloAtual, setCicloAtual] = useState(1);
   const [status, setStatus] = useState<StatusSessao>("pausada");
@@ -17,7 +16,8 @@ export const usePomodoroSession = () => {
     iniciar: () => setStatus("emAndamento"),
     pausar: () => setStatus("pausada"),
     retomar: () => setStatus("emAndamento"),
-    pularFase: () => {},
+    pularFase: () =>
+      setFaseAtual((prev) => (prev === "foco" ? "pausaCurta" : "foco")),
     reiniciarCiclos: () => setCicloAtual(1),
     encerrarSessao: () => setStatus("concluida"),
     descartarSessaoRetomada: () => {},
