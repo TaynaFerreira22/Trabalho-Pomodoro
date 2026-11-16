@@ -28,6 +28,46 @@ Aplicação desenvolvida em Next.js (App Router), React e TypeScript com persist
 
 ## Para os colegas APAGAR DEPOIS
 
+### Entrega Pessoa 1 — Motor Temporal, Persistência e Sessão (`usePomodoroSession`)
+
+A camada de domínio, persistência (`localStorage`) e motor temporal da sessão já está implementada e validada
+
+- **Arquivos implementados:**
+  - `src/types/session.ts` — Tipagens centrais (`SessaoAtiva`, `SnapshotPreset`, `FaseSessao`, `StatusSessao`)
+  - `src/utils/timeMath.ts` — Funções puras de cálculo temporal, transição de fases/ciclos e recálculo offline por timestamps (`recalcularSessaoPorTimestamp`)
+  - `src/services/sessionStorage.ts` — Persistência isolada na chave `pomodoro.sessaoAtiva` com validação estrutural contra dados corrompidos (`R-03`, `RNF-06`)
+  - `src/hooks/usePomodoroSession.ts` — Hook principal substituindo o stub anterior
+  - `src/app/teste-timer/page.tsx` — Rota temporária (`/teste-timer`) para testar o motor isoladamente sem alterar o `src/app/page.tsx` principal (apagar esta pasta antes da entrega final)
+
+#### Como consumir o hook na interface (`page.tsx` / Componentes):
+
+```tsx
+import { usePomodoroSession } from '@/hooks/usePomodoroSession';
+
+const {
+  // Estados prontos para exibição
+  sessao,                      // Objeto SessaoAtiva | null
+  tempoFormatado,              // String formatada em "MM:SS" (ex: "25:00")
+  progressoPercentual,         // Número de 0 a 100 para a barra de progresso
+  carregado,                   // Boolean (aguardar ser true antes de renderizar)
+  foiRetomadaAutomaticamente,  // Boolean (exibe aviso/botão de descartar sessão retomada - UC11)
+  erroPersistencia,            // String | null (alerta caso o localStorage falhe - RNF-06)
+  presetEmUsoId,               // String | null (ID do preset ativo para bloqueio na UI - RN-01)
+
+  // Ações operacionais
+  iniciarSessao,               // (preset: TemporizadorPersonalizado) => void
+  pausarSessao,                // () => void
+  retomarSessao,               // () => void
+  pularFase,                   // () => void (avança sem incrementar ciclos - RN-03)
+  reiniciarCiclos,             // () => void (chamar após confirmação no modal - UC07)
+  encerrarSessao,              // () => void (chamar após confirmação no modal - UC08)
+  descartarSessaoRetomada,     // () => void (chamar após confirmação no modal - UC11)
+} = usePomodoroSession({
+  aoFinalizarFase: (faseConcluida, proximaFase) => {
+    // Conectar aqui o alerta sonoro da Pessoa 2 (RF-14 / RN-13)
+  },
+});
+
 ## Resumo da Arquitetura e Base Implementada
 
 A estrutura inicial do projeto foi configurada para garantir execução 100% no navegador (_client-side_), persistência local e desenvolvimento paralelo entre os integrantes sem conflitos de código.
