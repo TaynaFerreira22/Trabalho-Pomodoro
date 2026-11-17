@@ -1,6 +1,6 @@
 // src/utils/timeMath.ts
 
-import { FaseSessao, SessaoAtiva, SnapshotPreset } from '@/types/session';
+import type{ FaseSessao, SessaoAtiva, SnapshotPreset } from '../types/session';
 
 const MS_POR_MINUTO = 60_000;
 

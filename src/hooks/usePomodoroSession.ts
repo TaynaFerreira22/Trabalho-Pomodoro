@@ -3,20 +3,20 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { TemporizadorPersonalizado } from '@/types/preset';
-import { FaseSessao, SessaoAtiva, SnapshotPreset } from '@/types/session';
+import type{ TemporizadorPersonalizado } from '../types/preset';
+import type{ FaseSessao, SessaoAtiva, SnapshotPreset } from '../types/session';
 import {
   calcularProximaEtapa,
   calcularTempoRestanteMs,
   formatarTempoMMSS,
   obterDuracaoFaseMs,
   recalcularSessaoPorTimestamp,
-} from '@/utils/timeMath';
+} from '../utils/timeMath';
 import {
   carregarSessaoStorage,
   removerSessaoStorage,
   salvarSessaoStorage,
-} from '@/services/sessionStorage';
+} from '../services/sessionStorage';
 
 export interface OpcoesUsePomodoroSession {
   /** Callback acionado sempre que uma fase termina naturalmente (RN-13 - Alerta Sonoro) */

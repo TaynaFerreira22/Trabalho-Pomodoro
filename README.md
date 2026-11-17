@@ -30,19 +30,19 @@ Aplicação desenvolvida em Next.js (App Router), React e TypeScript com persist
 
 ### Entrega Pessoa 1 — Motor Temporal, Persistência e Sessão (`usePomodoroSession`)
 
-A camada de domínio, persistência (`localStorage`) e motor temporal da sessão já está implementada e validada
+A camada de domínio, persistência (`localStorage`) e motor temporal da sessão já está implementada e validada, já adaptada para **Vite** e tipagens da equipe.
 
 - **Arquivos implementados:**
-  - `src/types/session.ts` — Tipagens centrais (`SessaoAtiva`, `SnapshotPreset`, `FaseSessao`, `StatusSessao`)
-  - `src/utils/timeMath.ts` — Funções puras de cálculo temporal, transição de fases/ciclos e recálculo offline por timestamps (`recalcularSessaoPorTimestamp`)
-  - `src/services/sessionStorage.ts` — Persistência isolada na chave `pomodoro.sessaoAtiva` com validação estrutural contra dados corrompidos (`R-03`, `RNF-06`)
-  - `src/hooks/usePomodoroSession.ts` — Hook principal substituindo o stub anterior
-  - `src/app/teste-timer/page.tsx` — Rota temporária (`/teste-timer`) para testar o motor isoladamente sem alterar o `src/app/page.tsx` principal (apagar esta pasta antes da entrega final)
+  - `src/types/session.ts` — Tipagens centrais (`SessaoAtiva`, `SnapshotPreset`, `FaseSessao`, `StatusSessao`).
+  - `src/utils/timeMath.ts` — Funções puras de cálculo temporal, transição de fases/ciclos e recálculo offline por timestamps (`recalcularSessaoPorTimestamp`).
+  - `src/services/sessionStorage.ts` — Persistência isolada na chave `pomodoro.sessaoAtiva` com validação estrutural contra dados corrompidos (`R-03`, `RNF-06`).
+  - `src/hooks/usePomodoroSession.ts` — Hook principal com snapshot imutável de preset (`RN-05`), controles operacionais, retomada automática e descarte de sessão.
+  - `src/TesteTimer.tsx` — Componente temporário de teste visual do motor. Para testar isoladamente, basta alterar o `src/main.tsx` trocando `<App />` por `<TesteTimer />` 
 
-#### Como consumir o hook na interface (`page.tsx` / Componentes):
+#### Como consumir o hook na interface (`App.tsx` / Componentes):
 
-````tsx
-import { usePomodoroSession } from '@/hooks/usePomodoroSession';
+```tsx
+import { usePomodoroSession } from './hooks/usePomodoroSession';
 
 const {
   // Estados prontos para exibição
@@ -50,24 +50,23 @@ const {
   tempoFormatado,              // String formatada em "MM:SS" (ex: "25:00")
   progressoPercentual,         // Número de 0 a 100 para a barra de progresso
   carregado,                   // Boolean (aguardar ser true antes de renderizar)
-  foiRetomadaAutomaticamente,  // Boolean (exibe aviso/botão de descartar sessão retomada - UC11)
-  erroPersistencia,            // String | null (alerta caso o localStorage falhe - RNF-06)
-  presetEmUsoId,               // String | null (ID do preset ativo para bloqueio na UI - RN-01)
+  foiRetomadaAutomaticamente,  // Boolean (exibe aviso/botão de descartar sessão retomada )
+  erroPersistencia,            // String | null (alerta caso o localStorage falhe)
+  presetEmUsoId,               // String | null (ID do preset ativo para bloqueio na UI)
 
   // Ações operacionais
   iniciarSessao,               // (preset: TemporizadorPersonalizado) => void
   pausarSessao,                // () => void
   retomarSessao,               // () => void
-  pularFase,                   // () => void (avança sem incrementar ciclos - RN-03)
-  reiniciarCiclos,             // () => void (chamar após confirmação no modal - UC07)
-  encerrarSessao,              // () => void (chamar após confirmação no modal - UC08)
-  descartarSessaoRetomada,     // () => void (chamar após confirmação no modal - UC11)
+  pularFase,                   // () => void (avança sem incrementar ciclos)
+  reiniciarCiclos,             // () => void (chamar após confirmação no modal)
+  encerrarSessao,              // () => void (chamar após confirmação no modal)
+  descartarSessaoRetomada,     // () => void (chamar após confirmação no modal)
 } = usePomodoroSession({
   aoFinalizarFase: (faseConcluida, proximaFase) => {
-    // Conectar aqui o alerta sonoro da Pessoa 2 (RF-14 / RN-13)
+    // Conectar aqui o alerta sonoro da Pessoa 2 
   },
 });
-
 ## Resumo da Arquitetura e Base Implementada
 
 A estrutura inicial do projeto foi configurada para garantir execução 100% no navegador (_client-side_), persistência local e desenvolvimento paralelo entre os integrantes sem conflitos de código.

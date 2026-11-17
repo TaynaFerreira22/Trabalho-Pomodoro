@@ -1,6 +1,6 @@
 // src/services/sessionStorage.ts
 
-import { SessaoAtiva } from '@/types/session';
+import type{ SessaoAtiva } from '../types/session';
 
 // Chave obrigatória definida na Seção 11.4 do Documento de Requisitos
 export const CHAVE_SESSAO_ATIVA = 'pomodoro.sessaoAtiva';
