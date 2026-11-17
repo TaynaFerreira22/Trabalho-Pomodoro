@@ -1,6 +1,5 @@
-"use client";
 import React from "react";
-import { FaseSessao } from "@/types";
+import type { FaseSessao } from "../../types";
 
 interface TimerDisplayProps {
   tempoRestanteMs: number;
