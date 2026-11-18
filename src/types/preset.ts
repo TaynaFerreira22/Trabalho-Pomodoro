@@ -1,3 +1,5 @@
+// src/types/preset.ts
+
 export interface TemporizadorPersonalizado {
   id: string;
   nome: string; // VR-01: 1 a 40 chars

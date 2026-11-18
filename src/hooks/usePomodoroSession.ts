@@ -1,32 +1,34 @@
 // src/hooks/usePomodoroSession.ts
 
-'use client';
-
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type{ TemporizadorPersonalizado } from '../types/preset';
-import type{ FaseSessao, SessaoAtiva, SnapshotPreset } from '../types/session';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { TemporizadorPersonalizado } from "../types/preset";
+import type { FaseSessao, SessaoAtiva, SnapshotPreset } from "../types/session";
 import {
   calcularProximaEtapa,
   calcularTempoRestanteMs,
   formatarTempoMMSS,
   obterDuracaoFaseMs,
   recalcularSessaoPorTimestamp,
-} from '../utils/timeMath';
+} from "../utils/timeMath";
 import {
   carregarSessaoStorage,
   removerSessaoStorage,
   salvarSessaoStorage,
-} from '../services/sessionStorage';
+} from "../services/sessionStorage";
 
 export interface OpcoesUsePomodoroSession {
   /** Callback acionado sempre que uma fase termina naturalmente (RN-13 - Alerta Sonoro) */
-  aoFinalizarFase?: (faseConcluida: FaseSessao, proximaFase: FaseSessao | null) => void;
+  aoFinalizarFase?: (
+    faseConcluida: FaseSessao,
+    proximaFase: FaseSessao | null,
+  ) => void;
 }
 
 export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
   const [sessao, setSessao] = useState<SessaoAtiva | null>(null);
   const [tempoRestanteMs, setTempoRestanteMs] = useState<number>(0);
-  const [foiRetomadaAutomaticamente, setFoiRetomadaAutomaticamente] = useState<boolean>(false);
+  const [foiRetomadaAutomaticamente, setFoiRetomadaAutomaticamente] =
+    useState<boolean>(false);
   const [erroPersistencia, setErroPersistencia] = useState<string | null>(null);
   const [carregado, setCarregado] = useState<boolean>(false);
 
@@ -39,7 +41,9 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
   const persistirEAtualizar = useCallback((novaSessao: SessaoAtiva | null) => {
     if (novaSessao === null) {
       const res = removerSessaoStorage();
-      setErroPersistencia(res.sucesso ? null : res.erro ?? 'Erro ao limpar sessão.');
+      setErroPersistencia(
+        res.sucesso ? null : (res.erro ?? "Erro ao limpar sessão."),
+      );
       setSessao(null);
       setTempoRestanteMs(0);
       setFoiRetomadaAutomaticamente(false);
@@ -47,7 +51,9 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
     }
 
     const res = salvarSessaoStorage(novaSessao);
-    setErroPersistencia(res.sucesso ? null : res.erro ?? 'Erro ao salvar sessão.');
+    setErroPersistencia(
+      res.sucesso ? null : (res.erro ?? "Erro ao salvar sessão."),
+    );
     setSessao(novaSessao);
     setTempoRestanteMs(calcularTempoRestanteMs(novaSessao));
   }, []);
@@ -61,7 +67,9 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
     if (!resultado.sucesso) {
       // R-03: Estado corrompido detectado -> limpa armazenamento e reporta ao usuário
       removerSessaoStorage();
-      setErroPersistencia(resultado.erro ?? 'Sessão anterior inválida foi descartada.');
+      setErroPersistencia(
+        resultado.erro ?? "Sessão anterior inválida foi descartada.",
+      );
       setCarregado(true);
       return;
     }
@@ -72,12 +80,15 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
     }
 
     const agora = Date.now();
-    const { sessaoAtualizada } = recalcularSessaoPorTimestamp(resultado.dados, agora);
+    const { sessaoAtualizada } = recalcularSessaoPorTimestamp(
+      resultado.dados,
+      agora,
+    );
 
     salvarSessaoStorage(sessaoAtualizada);
     setSessao(sessaoAtualizada);
     setTempoRestanteMs(calcularTempoRestanteMs(sessaoAtualizada, agora));
-    setFoiRetomadaAutomaticamente(sessaoAtualizada.status !== 'concluida');
+    setFoiRetomadaAutomaticamente(sessaoAtualizada.status !== "concluida");
     setCarregado(true);
   }, []);
 
@@ -86,20 +97,25 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
    * Executa a cada 250ms para manter precisão visual e detectar virada de fase sem drift.
    */
   useEffect(() => {
-    if (!sessao || sessao.status !== 'emAndamento') return;
+    if (!sessao || sessao.status !== "emAndamento") return;
 
     const atualizarRelogio = () => {
       const agora = Date.now();
 
       if (agora >= sessao.fimFasePrevistoEm) {
         const faseAnterior = sessao.faseAtual;
-        const { sessaoAtualizada } = recalcularSessaoPorTimestamp(sessao, agora);
+        const { sessaoAtualizada } = recalcularSessaoPorTimestamp(
+          sessao,
+          agora,
+        );
 
         persistirEAtualizar(sessaoAtualizada);
 
         // RN-13: Emite alerta sonoro ao fim de cada fase concluída
         const proximaFase =
-          sessaoAtualizada.status === 'concluida' ? null : sessaoAtualizada.faseAtual;
+          sessaoAtualizada.status === "concluida"
+            ? null
+            : sessaoAtualizada.faseAtual;
         callbackFinalizarRef.current?.(faseAnterior, proximaFase);
       } else {
         setTempoRestanteMs(calcularTempoRestanteMs(sessao, agora));
@@ -125,17 +141,18 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
         tempoPausaLongaMin: preset.tempoPausaLongaMin,
       };
 
-      const duracaoInicialMs = obterDuracaoFaseMs('foco', snapshot);
+      const duracaoInicialMs = obterDuracaoFaseMs("foco", snapshot);
 
       const novaSessao: SessaoAtiva = {
-        id: typeof crypto !== 'undefined' && crypto.randomUUID
-          ? crypto.randomUUID()
-          : `sessao-${agora}`,
+        id:
+          typeof crypto !== "undefined" && crypto.randomUUID
+            ? crypto.randomUUID()
+            : `sessao-${agora}`,
         presetId: preset.id,
         snapshotPreset: snapshot,
-        faseAtual: 'foco',
+        faseAtual: "foco",
         cicloAtual: 1,
-        status: 'emAndamento',
+        status: "emAndamento",
         inicioFaseEm: agora,
         fimFasePrevistoEm: agora + duracaoInicialMs,
         pausadaEm: null,
@@ -147,21 +164,21 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
       setFoiRetomadaAutomaticamente(false);
       persistirEAtualizar(novaSessao);
     },
-    [persistirEAtualizar]
+    [persistirEAtualizar],
   );
 
   /**
    * UC05 (RF-06): Pausa a sessão em andamento preservando o saldo exato em ms.
    */
   const pausarSessao = useCallback(() => {
-    if (!sessao || sessao.status !== 'emAndamento') return;
+    if (!sessao || sessao.status !== "emAndamento") return;
 
     const agora = Date.now();
     const restanteMs = calcularTempoRestanteMs(sessao, agora);
 
     const sessaoPausada: SessaoAtiva = {
       ...sessao,
-      status: 'pausada',
+      status: "pausada",
       pausadaEm: agora,
       tempoRestanteAoPausarMs: restanteMs,
       atualizadaEm: agora,
@@ -174,7 +191,7 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
    * UC05 (RF-07): Retoma uma sessão pausada recalculando o novo fim da fase.
    */
   const retomarSessao = useCallback(() => {
-    if (!sessao || sessao.status !== 'pausada') return;
+    if (!sessao || sessao.status !== "pausada") return;
 
     const agora = Date.now();
     const saldoMs =
@@ -183,7 +200,7 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
 
     const sessaoRetomada: SessaoAtiva = {
       ...sessao,
-      status: 'emAndamento',
+      status: "emAndamento",
       inicioFaseEm: agora,
       fimFasePrevistoEm: agora + saldoMs,
       pausadaEm: null,
@@ -198,20 +215,20 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
    * UC06 (RF-08 / RN-03): Avança manualmente para a próxima fase sem incrementar ciclos.
    */
   const pularFase = useCallback(() => {
-    if (!sessao || sessao.status === 'concluida') return;
+    if (!sessao || sessao.status === "concluida") return;
 
     const agora = Date.now();
     const proxima = calcularProximaEtapa(
       sessao.faseAtual,
       sessao.cicloAtual,
       sessao.snapshotPreset,
-      true // foiPulada = true -> RN-03 não incrementa ciclos
+      true, // foiPulada = true -> RN-03 não incrementa ciclos
     );
 
     if (proxima.concluiuSessao) {
       persistirEAtualizar({
         ...sessao,
-        status: 'concluida',
+        status: "concluida",
         pausadaEm: null,
         tempoRestanteAoPausarMs: 0,
         atualizadaEm: agora,
@@ -219,8 +236,11 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
       return;
     }
 
-    const novaDuracaoMs = obterDuracaoFaseMs(proxima.fase, sessao.snapshotPreset);
-    const manterPausada = sessao.status === 'pausada';
+    const novaDuracaoMs = obterDuracaoFaseMs(
+      proxima.fase,
+      sessao.snapshotPreset,
+    );
+    const manterPausada = sessao.status === "pausada";
 
     const sessaoAvancada: SessaoAtiva = {
       ...sessao,
@@ -244,14 +264,14 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
     if (!sessao) return;
 
     const agora = Date.now();
-    const duracaoFocoMs = obterDuracaoFaseMs('foco', sessao.snapshotPreset);
-    const manterPausada = sessao.status === 'pausada';
+    const duracaoFocoMs = obterDuracaoFaseMs("foco", sessao.snapshotPreset);
+    const manterPausada = sessao.status === "pausada";
 
     const sessaoReiniciada: SessaoAtiva = {
       ...sessao,
-      faseAtual: 'foco',
+      faseAtual: "foco",
       cicloAtual: 1,
-      status: manterPausada ? 'pausada' : 'emAndamento',
+      status: manterPausada ? "pausada" : "emAndamento",
       inicioFaseEm: agora,
       fimFasePrevistoEm: agora + duracaoFocoMs,
       pausadaEm: manterPausada ? agora : null,
@@ -280,19 +300,26 @@ export function usePomodoroSession(opcoes?: OpcoesUsePomodoroSession) {
 
     const progressoPercentual =
       duracaoTotalFaseMs > 0
-        ? Math.min(100, Math.max(0, ((duracaoTotalFaseMs - tempoRestanteMs) / duracaoTotalFaseMs) * 100))
+        ? Math.min(
+            100,
+            Math.max(
+              0,
+              ((duracaoTotalFaseMs - tempoRestanteMs) / duracaoTotalFaseMs) *
+                100,
+            ),
+          )
         : 0;
 
     // RN-01: Enquanto houver sessão não concluída, o preset fica bloqueado para edição/exclusão
     const presetEmUsoId =
-      sessao && sessao.status !== 'concluida' ? sessao.presetId : null;
+      sessao && sessao.status !== "concluida" ? sessao.presetId : null;
 
     return {
       tempoFormatado: formatarTempoMMSS(tempoRestanteMs),
       duracaoTotalFaseMs,
       progressoPercentual,
       presetEmUsoId,
-      temSessaoAtiva: sessao !== null && sessao.status !== 'concluida',
+      temSessaoAtiva: sessao !== null && sessao.status !== "concluida",
     };
   }, [sessao, tempoRestanteMs]);
 
