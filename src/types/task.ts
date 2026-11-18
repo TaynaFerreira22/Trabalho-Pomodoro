@@ -1,3 +1,5 @@
+// src/types/task.ts
+
 export type EstadoTarefa =
   | "backlog"
   | "aFazer"

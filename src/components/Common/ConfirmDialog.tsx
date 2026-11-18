@@ -21,6 +21,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   aoCancelar,
   variante = "perigo",
 }) => {
+  const botaoCancelarRef = useRef<HTMLButtonElement>(null);
   const botaoConfirmarRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -32,6 +33,21 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       if (e.key === "Escape") {
         e.preventDefault();
         aoCancelar();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          if (document.activeElement === botaoCancelarRef.current) {
+            e.preventDefault();
+            botaoConfirmarRef.current?.focus();
+          }
+        } else {
+          if (document.activeElement === botaoConfirmarRef.current) {
+            e.preventDefault();
+            botaoCancelarRef.current?.focus();
+          }
+        }
       }
     };
 
@@ -49,7 +65,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       aria-describedby="dialog-desc"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
     >
-      <div className="bg-white border-2 border-slate-400 max-w-md w-full p-6 text-left shadow-lg">
+      <div className="bg-white border-2 border-slate-400 max-w-md w-full p-6 text-left shadow-lg rounded">
         <h2 id="dialog-title" className="text-lg font-bold text-slate-900 mb-2">
           {titulo}
         </h2>
@@ -58,9 +74,10 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         </p>
         <div className="flex justify-end gap-3">
           <button
+            ref={botaoCancelarRef}
             type="button"
             onClick={aoCancelar}
-            className="px-4 py-2 text-sm font-medium border border-slate-400 bg-slate-100 hover:bg-slate-200 text-slate-800"
+            className="px-4 py-2 text-sm font-medium border border-slate-400 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded"
           >
             {textoCancelar}
           </button>
@@ -68,7 +85,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             ref={botaoConfirmarRef}
             type="button"
             onClick={aoConfirmar}
-            className={`px-4 py-2 text-sm font-medium text-white ${
+            className={`px-4 py-2 text-sm font-medium text-white rounded ${
               variante === "perigo"
                 ? "bg-red-700 hover:bg-red-800"
                 : "bg-slate-800 hover:bg-slate-900"

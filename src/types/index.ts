@@ -1,3 +1,5 @@
+// src/types/index.ts
+
 export * from "./preset";
 export * from "./session";
 export * from "./task";
