@@ -1,5 +1,97 @@
 # Pomodoro — Aplicação Web de Gestão de Foco
 
+Aplicação desenvolvida em Next.js (App Router), React e TypeScript com persistência local (`localStorage`) e execução cliente única.
+
+## Decisões Técnicas de Engenharia
+
+1. **Cálculo Baseado em Timestamps Absolutos (RNF-03, RN-07):**
+   - Não foram utilizados temporizadores lineares contínuos baseados em `setInterval` para controle de estado, pois abas em segundo plano têm sua taxa de execução reduzida ou suspensa pelo navegador.
+   - O estado do tempo restante é derivado matematicamente da diferença entre o timestamp do sistema (`Date.now()`) e o `fimFasePrevistoEm`, assegurando a reconstituição correta da sessão após fechamento ou atualização da aba.
+2. **Mitigação de SSR e Hidratação no Next.js (RT-02, RT-03):**
+   - Como o escopo restringe a persistência estritamente ao `localStorage` do navegador do usuário, as rotas e componentes utilizam diretivas de execução no cliente (`'use client'`) com salvaguardas de montagem, prevenindo erros de hidratação ou chamadas prematuras a APIs do navegador no servidor Node.js.
+3. **Desacoplamento de Tarefas e Sessão (RN-09):**
+   - O painel de tarefas e a sessão de foco mantêm contratos de dados e chaves de armazenamento separadas (`pomodoro.tarefas` e `pomodoro.sessaoAtiva`), de modo que operações em tarefas não afetam o temporizador e vice-versa.
+
+## Instruções para o Avaliador (Execução Local)
+
+### Pré-requisitos
+
+- Node.js versão 18.17.0 ou superior instalada.
+
+### Como Rodar
+
+1. Extraia os arquivos ou clone o repositório no seu computador:
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd <NOME_DA_PASTA>
+   ```
+
+## Para os colegas APAGAR DEPOIS
+
+### Entrega Pessoa 1 — Motor Temporal, Persistência e Sessão (`usePomodoroSession`)
+
+A camada de domínio, persistência (`localStorage`) e motor temporal da sessão já está implementada e validada, já adaptada para **Vite** e tipagens da equipe.
+
+- **Arquivos implementados:**
+  - `src/types/session.ts` — Tipagens centrais (`SessaoAtiva`, `SnapshotPreset`, `FaseSessao`, `StatusSessao`).
+  - `src/utils/timeMath.ts` — Funções puras de cálculo temporal, transição de fases/ciclos e recálculo offline por timestamps (`recalcularSessaoPorTimestamp`).
+  - `src/services/sessionStorage.ts` — Persistência isolada na chave `pomodoro.sessaoAtiva` com validação estrutural contra dados corrompidos (`R-03`, `RNF-06`).
+  - `src/hooks/usePomodoroSession.ts` — Hook principal com snapshot imutável de preset (`RN-05`), controles operacionais, retomada automática e descarte de sessão.
+  - `src/TesteTimer.tsx` — Componente temporário de teste visual do motor. Para testar isoladamente, basta alterar o `src/main.tsx` trocando `<App />` por `<TesteTimer />` 
+
+#### Como consumir o hook na interface (`App.tsx` / Componentes):
+
+```tsx
+import { usePomodoroSession } from './hooks/usePomodoroSession';
+
+const {
+  // Estados prontos para exibição
+  sessao,                      // Objeto SessaoAtiva | null
+  tempoFormatado,              // String formatada em "MM:SS" (ex: "25:00")
+  progressoPercentual,         // Número de 0 a 100 para a barra de progresso
+  carregado,                   // Boolean (aguardar ser true antes de renderizar)
+  foiRetomadaAutomaticamente,  // Boolean (exibe aviso/botão de descartar sessão retomada )
+  erroPersistencia,            // String | null (alerta caso o localStorage falhe)
+  presetEmUsoId,               // String | null (ID do preset ativo para bloqueio na UI)
+
+  // Ações operacionais
+  iniciarSessao,               // (preset: TemporizadorPersonalizado) => void
+  pausarSessao,                // () => void
+  retomarSessao,               // () => void
+  pularFase,                   // () => void (avança sem incrementar ciclos)
+  reiniciarCiclos,             // () => void (chamar após confirmação no modal)
+  encerrarSessao,              // () => void (chamar após confirmação no modal)
+  descartarSessaoRetomada,     // () => void (chamar após confirmação no modal)
+} = usePomodoroSession({
+  aoFinalizarFase: (faseConcluida, proximaFase) => {
+    // Conectar aqui o alerta sonoro da Pessoa 2 
+  },
+});
+## Resumo da Arquitetura e Base Implementada
+
+A estrutura inicial do projeto foi configurada para garantir execução 100% no navegador (_client-side_), persistência local e desenvolvimento paralelo entre os integrantes sem conflitos de código.
+
+### Tecnologias e Configurações Aplicadas
+
+- **Stack Principal:** Next.js (App Router), React, TypeScript e Tailwind CSS v4.
+- **Estilização Semântica (`globals.css`):** Configuração via `@import "tailwindcss"` e bloco `@theme` definindo paletas suaves e acessíveis para diferenciar visualmente cada estado do ciclo: **Foco** (tons de azul), **Pausa Curta** (tons de amarelo pastel) e **Pausa Longa** (tons de âmbar).
+- **Prevenção de Hydration Mismatch (`page.tsx`):** Utilização da diretiva `'use client'` combinada com o hook nativo `useSyncExternalStore` para garantir que a leitura do `localStorage` ocorra exclusivamente após a montagem no navegador, evitando discrepâncias entre SSR e cliente.
+- **Contratos de Dados Canônicos (`types.ts`):** Definição centralizada das interfaces `TemporizadorPersonalizado`, `SessaoAtiva`, `Tarefa` e das chaves exclusivas de armazenamento (`STORAGE_KEYS`), permitindo integração previsível entre todos os módulos.
+- **Limpeza de Ambiente:** Remoção de arquivos demonstrativos padrão e configuração do `.gitignore` para impedir o versionamento de pastas geradas localmente (`node_modules/` e `.next/`).
+
+### Componentes Base e Stubs Entregues
+
+- **Shell Responsivo (`AppLayout`):** Estrutura em grid adaptável com cabeçalho fixo, área principal de duas colunas no desktop (temporizador à esquerda e tarefas à direita) e coluna única em telas menores.
+- **Visor do Temporizador (`TimerDisplay`):** Exibição numérica formatada (`mm:ss`) com espaçamento fixo (`tabular-nums`), etiqueta de fase atual, contador de ciclos e barra de progresso acessível.
+- **Modal de Confirmação Global (`ConfirmDialog`):** Diálogo reutilizável com foco automático no botão de ação, atributos ARIA e fechamento via tecla `Escape`.
+- **Stubs de Integração:** Interfaces provisórias para o seletor de presets, painel de tarefas e hook de sessão, permitindo que a aplicação compile e rode localmente (`npm run dev`) desde o início.
+
+### Divisão de Responsabilidades
+
+- **Pessoa 1 (Motor do Timer):** Lógica de contagem regressiva baseada em timestamps absolutos (`Date.now()`), transição automática de fases, controles operacionais e persistência da sessão ativa.
+- **Pessoa 2 (Presets e Áudio):** CRUD de temporizadores personalizados, validações de limites e emissão de alerta sonoro via Web Audio API ao fim das fases.
+- **Pessoa 3 (Gestão de Tarefas):** CRUD de tarefas, alteração de estados/prioridades, ordenação determinística e persistência independente do cronômetro.
+- **Pessoa 4 (Interface e Documentação):** Layout responsivo, visor visual do timer, modais globais de confirmação e documentação técnica no `README.md`.
 Aplicação web _client-side_ para gerenciamento de tempo e produtividade baseada na técnica Pomodoro, desenvolvida em **React** e **TypeScript** com **Vite** e **Tailwind CSS v4**.
 
 ---
@@ -29,7 +121,7 @@ Aplicação web _client-side_ para gerenciamento de tempo e produtividade basead
    ```bash
    git clone https://github.com/TaynaFerreira22/Trabalho-Pomodoro.git
    cd trabalho-pomodoro
-   ```
+````
 
 2. Instale as dependências:
 
