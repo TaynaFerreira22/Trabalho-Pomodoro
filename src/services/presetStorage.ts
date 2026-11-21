@@ -1,7 +1,8 @@
-import { STORAGE_KEYS } from "../types";
 import type { TemporizadorPersonalizado } from "../types/preset";
 import { validarPreset } from "../utils/presetValidation";
 import type { ResultadoPersistencia } from "./sessionStorage";
+
+const CHAVE_PRESETS = "pomodoro.presets";
 
 function validarIntegridadePreset(
   dado: unknown,
@@ -36,7 +37,7 @@ export function carregarPresetsStorage(): ResultadoPersistencia<
   }
 
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEYS.PRESETS);
+    const raw = window.localStorage.getItem(CHAVE_PRESETS);
     if (!raw) {
       return { sucesso: true, dados: null };
     }
@@ -69,7 +70,7 @@ export function salvarPresetsStorage(
   }
 
   try {
-    window.localStorage.setItem(STORAGE_KEYS.PRESETS, JSON.stringify(presets));
+    window.localStorage.setItem(CHAVE_PRESETS, JSON.stringify(presets));
     return { sucesso: true, dados: presets };
   } catch {
     return {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AppLayout } from "./components/Layout/AppLayout";
 import { TimerDisplay } from "./components/Timer/TimerDisplay";
 import { PresetSelector } from "./components/Presets/PresetSelector";
@@ -7,6 +7,7 @@ import { ConfirmDialog } from "./components/Common/ConfirmDialog";
 import { usePomodoroSession } from "./hooks/usePomodoroSession";
 import { usePresets } from "./hooks/usePresets";
 import { useAudioAlert } from "./hooks/useAudioAlert";
+import { useTasks } from "./hooks/useTasks";
 
 type TipoConfirmacao =
   | "encerrar"
@@ -19,7 +20,17 @@ export function App() {
   const [confirmacaoAtiva, setConfirmacaoAtiva] =
     useState<TipoConfirmacao>(null);
   const { tocarAlerta } = useAudioAlert();
-  const session = usePomodoroSession({ aoFinalizarFase: tocarAlerta });
+
+  const tasks = useTasks();
+  const tarefaAtivaIdRef = useRef<string | null>(tasks.tarefaAtivaId);
+  tarefaAtivaIdRef.current = tasks.tarefaAtivaId;
+
+  const aoFinalizarFase = useCallback(() => {
+    tocarAlerta();
+    tasks.incrementarPomodoroTarefa(tarefaAtivaIdRef.current);
+  }, [tocarAlerta, tasks]);
+
+  const session = usePomodoroSession({ aoFinalizarFase });
   const presets = usePresets(session.presetEmUsoId);
   const presetSelecionado = presets.presetSelecionado;
 
@@ -194,7 +205,20 @@ export function App() {
             </div>
           </div>
         }
-        tasksSlot={<TaskPanel />}
+        tasksSlot={
+          <TaskPanel
+            tarefas={tasks.tarefas}
+            tarefaAtivaId={tasks.tarefaAtivaId}
+            erro={tasks.erroPersistencia}
+            aoSelecionarTarefa={tasks.setTarefaAtivaId}
+            aoCriarTarefa={(entrada) => tasks.criarTarefa(entrada)}
+            aoEditarTarefa={(id, entrada) => tasks.editarTarefa(id, entrada)}
+            aoAlternarConclusao={tasks.alternarConclusaoTarefa}
+            aoExcluirTarefa={tasks.excluirTarefa}
+            aoLimparConcluidas={tasks.limparConcluidas}
+            aoLimparErro={tasks.limparErroPersistencia}
+          />
+        }
       />
 
       <ConfirmDialog

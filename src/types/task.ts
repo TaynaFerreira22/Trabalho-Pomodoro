@@ -1,18 +1,24 @@
 // src/types/task.ts
 
-export type EstadoTarefa =
-  | "backlog"
-  | "aFazer"
-  | "emExecucao"
-  | "concluida"
-  | "cancelada";
+export type StatusTarefa = "backlog" | "emAndamento" | "concluida";
 export type PrioridadeTarefa = "baixa" | "media" | "alta";
 
 export interface Tarefa {
   id: string;
-  titulo: string; // VR-06: 1 a 100 chars
-  estado: EstadoTarefa; // RN-12: default 'backlog'
-  prioridade: PrioridadeTarefa; // RN-12: default 'media'
+  titulo: string;
+  descricao?: string;
+  status: StatusTarefa;
+  prioridade: PrioridadeTarefa;
+  pomodorosEstimados: number;
+  pomodorosConcluidos: number;
   criadaEm: number;
   atualizadaEm: number;
+}
+
+export interface EntradaTarefa {
+  titulo: string;
+  descricao?: string;
+  status?: StatusTarefa;
+  prioridade?: PrioridadeTarefa;
+  pomodorosEstimados?: number;
 }
