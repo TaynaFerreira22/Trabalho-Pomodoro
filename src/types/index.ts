@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // src/types/index.ts
 
 export * from "./preset";
@@ -9,3 +10,9 @@ export const STORAGE_KEYS = {
   TAREFAS: "pomodoro.tarefas",
   SESSAO_ATIVA: "pomodoro.sessaoAtiva",
 } as const;
+=======
+//index.ts
+export * from "./preset";
+export * from "./session";
+export * from "./task";
+>>>>>>> Stashed changes
