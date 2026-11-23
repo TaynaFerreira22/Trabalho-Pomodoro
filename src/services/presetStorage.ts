@@ -1,4 +1,3 @@
-//presetStorage.ts
 import type { TemporizadorPersonalizado } from "../types/preset";
 import { validarPreset } from "../utils/presetValidation";
 import type { ResultadoPersistencia } from "./sessionStorage";

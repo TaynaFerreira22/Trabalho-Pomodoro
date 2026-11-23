@@ -1,4 +1,3 @@
-//useAudioAlert.ts
 import { useEffect } from "react";
 import { desbloquearAudio, tocarAlerta } from "../services/audioService";
 

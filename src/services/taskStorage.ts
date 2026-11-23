@@ -1,5 +1,8 @@
-//taskStorage.ts
-import type { PrioridadeTarefa, StatusTarefa, Tarefa } from "../types/task";
+import type {
+  PrioridadeTarefa,
+  StatusTarefa,
+  Tarefa,
+} from "../types/task";
 
 const CHAVE_TAREFAS = "@pomodoro:tarefas:v1";
 

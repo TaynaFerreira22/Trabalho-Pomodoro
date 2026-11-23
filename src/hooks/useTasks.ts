@@ -1,4 +1,3 @@
-//useTasks.ts
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   carregarTarefasStorage,
@@ -8,10 +7,7 @@ import type { EntradaTarefa, Tarefa } from "../types/task";
 import { ordenarTarefasFixo } from "../utils/taskSort";
 
 function gerarIdTarefa(): string {
-  if (
-    typeof crypto !== "undefined" &&
-    typeof crypto.randomUUID === "function"
-  ) {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
     return crypto.randomUUID();
   }
   return `tarefa-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
@@ -66,9 +62,8 @@ export function useTasks() {
     };
 
     setTarefasBrutas((prev) => [...prev, novaTarefa]);
-    setTarefaAtivaId(
-      (atual) =>
-        atual ?? (novaTarefa.status !== "concluida" ? novaTarefa.id : null),
+    setTarefaAtivaId((atual) =>
+      atual ?? (novaTarefa.status !== "concluida" ? novaTarefa.id : null),
     );
 
     return novaTarefa;
@@ -95,10 +90,7 @@ export function useTasks() {
           prioridade: entrada.prioridade ?? tarefa.prioridade,
           pomodorosEstimados:
             entrada.pomodorosEstimados !== undefined
-              ? Math.max(
-                  1,
-                  Math.min(20, Math.floor(entrada.pomodorosEstimados)),
-                )
+              ? Math.max(1, Math.min(20, Math.floor(entrada.pomodorosEstimados)))
               : tarefa.pomodorosEstimados,
           atualizadaEm: agora,
         };

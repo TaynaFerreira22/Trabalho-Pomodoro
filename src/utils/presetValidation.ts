@@ -1,4 +1,3 @@
-//presetValidation.ts
 import { LIMITES_PRESET } from "../types/preset";
 import type { DadosPreset, ErrosPreset } from "../types/preset";
 

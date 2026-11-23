@@ -1,29 +1,38 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AppLayout } from "./components/Layout/AppLayout";
 import { TimerDisplay } from "./components/Timer/TimerDisplay";
 import { PresetSelector } from "./components/Presets/PresetSelector";
 import { TaskPanel } from "./components/Tasks/TaskPanel";
 import { ConfirmDialog } from "./components/Common/ConfirmDialog";
 import { usePomodoroSession } from "./hooks/usePomodoroSession";
-import type { TemporizadorPersonalizado } from "./types";
+import { usePresets } from "./hooks/usePresets";
+import { useAudioAlert } from "./hooks/useAudioAlert";
+import { useTasks } from "./hooks/useTasks";
 
-const PRESET_PADRAO: TemporizadorPersonalizado = {
-  id: "preset-padrao",
-  nome: "Pomodoro Clássico",
-  tempoFocoMin: 25,
-  tempoPausaCurtaMin: 5,
-  ciclosAntesPausaLonga: 4,
-  tempoPausaLongaMin: 15,
-  criadoEm: Date.now(),
-  atualizadoEm: Date.now(),
-};
-
-type TipoConfirmacao = "encerrar" | "reiniciar" | "descartar" | null;
+type TipoConfirmacao =
+  | "encerrar"
+  | "reiniciar"
+  | "descartar"
+  | "excluirPreset"
+  | null;
 
 export function App() {
   const [confirmacaoAtiva, setConfirmacaoAtiva] =
     useState<TipoConfirmacao>(null);
-  const session = usePomodoroSession();
+  const { tocarAlerta } = useAudioAlert();
+
+  const tasks = useTasks();
+  const tarefaAtivaIdRef = useRef<string | null>(tasks.tarefaAtivaId);
+  tarefaAtivaIdRef.current = tasks.tarefaAtivaId;
+
+  const aoFinalizarFase = useCallback(() => {
+    tocarAlerta();
+    tasks.incrementarPomodoroTarefa(tarefaAtivaIdRef.current);
+  }, [tocarAlerta, tasks]);
+
+  const session = usePomodoroSession({ aoFinalizarFase });
+  const presets = usePresets(session.presetEmUsoId);
+  const presetSelecionado = presets.presetSelecionado;
 
   const statusAtual = session.sessao?.status;
   const emAndamento = statusAtual === "emAndamento";
@@ -31,7 +40,15 @@ export function App() {
 
   const tempoExibidoMs = session.temSessaoAtiva
     ? session.tempoRestanteMs
-    : PRESET_PADRAO.tempoFocoMin * 60 * 1000;
+    : (presetSelecionado?.tempoFocoMin ?? 0) * 60 * 1000;
+
+  const selecionarPreset = (id: string) => {
+    const preset = presets.presets.find((p) => p.id === id);
+    if (!preset) return;
+
+    presets.selecionarPreset(id);
+    if (session.temSessaoAtiva) session.iniciarSessao(preset);
+  };
 
   const configModal: Record<
     Exclude<TipoConfirmacao, null>,
@@ -67,6 +84,15 @@ export function App() {
       variante: "perigo",
       acao: () => session.descartarSessaoRetomada(),
     },
+    excluirPreset: {
+      titulo: "Excluir Preset?",
+      mensagem: `Deseja realmente excluir o preset "${presetSelecionado?.nome ?? ""}"? Esta ação não pode ser desfeita.`,
+      textoConfirmar: "Excluir",
+      variante: "perigo",
+      acao: () => {
+        if (presetSelecionado) presets.excluirPreset(presetSelecionado.id);
+      },
+    },
   };
 
   const modalAtual = confirmacaoAtiva ? configModal[confirmacaoAtiva] : null;
@@ -74,7 +100,19 @@ export function App() {
   return (
     <>
       <AppLayout
-        topBarSlot={<PresetSelector />}
+        topBarSlot={
+          <PresetSelector
+            presets={presets.presets}
+            presetSelecionadoId={presetSelecionado?.id ?? null}
+            presetEmUsoId={session.presetEmUsoId}
+            erro={presets.erroPersistencia}
+            aoSelecionar={selecionarPreset}
+            aoCriar={presets.criarPreset}
+            aoEditar={presets.editarPreset}
+            aoSolicitarExclusao={() => setConfirmacaoAtiva("excluirPreset")}
+            aoLimparErro={presets.limparErroPersistencia}
+          />
+        }
         timerSlot={
           <div className="flex flex-col items-center gap-6 w-full">
             {session.erroPersistencia && (
@@ -125,12 +163,13 @@ export function App() {
               ) : (
                 <button
                   type="button"
-                  onClick={() =>
-                    pausada
-                      ? session.retomarSessao()
-                      : session.iniciarSessao(PRESET_PADRAO)
-                  }
-                  className="px-5 py-2 font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-xs transition-colors"
+                  disabled={!pausada && !presetSelecionado}
+                  onClick={() => {
+                    if (pausada) session.retomarSessao();
+                    else if (presetSelecionado)
+                      session.iniciarSessao(presetSelecionado);
+                  }}
+                  className="px-5 py-2 font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {pausada ? "Retomar" : "Iniciar"}
                 </button>
@@ -166,7 +205,20 @@ export function App() {
             </div>
           </div>
         }
-        tasksSlot={<TaskPanel />}
+        tasksSlot={
+          <TaskPanel
+            tarefas={tasks.tarefas}
+            tarefaAtivaId={tasks.tarefaAtivaId}
+            erro={tasks.erroPersistencia}
+            aoSelecionarTarefa={tasks.setTarefaAtivaId}
+            aoCriarTarefa={(entrada) => tasks.criarTarefa(entrada)}
+            aoEditarTarefa={(id, entrada) => tasks.editarTarefa(id, entrada)}
+            aoAlternarConclusao={tasks.alternarConclusaoTarefa}
+            aoExcluirTarefa={tasks.excluirTarefa}
+            aoLimparConcluidas={tasks.limparConcluidas}
+            aoLimparErro={tasks.limparErroPersistencia}
+          />
+        }
       />
 
       <ConfirmDialog

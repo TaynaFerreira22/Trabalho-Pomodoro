@@ -1,4 +1,3 @@
-//taskSort.ts
 import type { PrioridadeTarefa, Tarefa } from "../types/task";
 
 const PESO_PRIORIDADE: Record<PrioridadeTarefa, number> = {

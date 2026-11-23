@@ -1,11 +1,7 @@
-//audioService.ts
 let contexto: AudioContext | null = null;
 
 function obterContexto(): AudioContext | null {
-  if (
-    typeof window === "undefined" ||
-    typeof window.AudioContext === "undefined"
-  ) {
+  if (typeof window === "undefined" || typeof window.AudioContext === "undefined") {
     return null;
   }
 
