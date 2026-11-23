@@ -33,8 +33,6 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
 	const selecionado = presets.find((p) => p.id === presetSelecionadoId) ?? null;
 	const bloqueado = selecionado !== null && selecionado.id === presetEmUsoId;
 
-	const sessaoAtiva = presetEmUsoId !== null;
-
 	return (
 			<div className="flex flex-col gap-2">
 			<div className="flex flex-wrap items-center gap-2">
@@ -51,14 +49,13 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
 			{presets.length === 0 && <option value="">Nenhum preset</option>}
 			{presets.map((preset) => (
 						<option key={preset.id} value={preset.id}>
-						{preset.nome}
+						{preset.nome}{preset.id === presetEmUsoId ? " (em uso)" : ""}
 						</option>
 						))}
 			</select>
 
 				<button
 				type="button"
-				disabled= {sessaoAtiva}
 				onClick={() => setModal("criar")}
 			className={ESTILO_BOTAO}
 			>
@@ -82,9 +79,15 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
 				</button>
 				</div>
 
+				{selecionado && (
+					<p className="text-xs text-slate-500">
+						Duração: {selecionado.tempoFocoMin} min · Pausa: {selecionado.tempoPausaCurtaMin} min · Fases até pausa longa: {selecionado.ciclosAntesPausaLonga}
+					</p>
+				)}
+
 				{bloqueado && (
 						<p className="text-xs text-slate-500">
-						Preset em uso por uma sessão ativa: criação, edição e exclusão bloqueadas.
+						Preset em uso por uma sessão ativa: edição e exclusão bloqueadas.
 						</p>
 					      )}
 

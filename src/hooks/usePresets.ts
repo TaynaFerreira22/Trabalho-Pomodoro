@@ -50,8 +50,8 @@ export function usePresets(presetEmUsoId: string | null) {
 
 	const presetSelecionado = useMemo(
 			() =>
-			presets.find((p) => p.id === presetEmUsoId) ??
 			presets.find((p) => p.id === selecionadoId) ??
+			presets.find((p) => p.id === presetEmUsoId) ??
 			presets[0] ??
 			null,
 			[presets, presetEmUsoId, selecionadoId],
@@ -60,8 +60,6 @@ export function usePresets(presetEmUsoId: string | null) {
 	const criarPreset = useCallback(
 			(dados: DadosPreset): boolean => {
 			if (Object.keys(validarPreset(dados)).length > 0) return false;
-			if (presetEmUsoId !== null) return false;
-
 
 			const agora = Date.now();
 			const novoPreset: TemporizadorPersonalizado = {
@@ -78,7 +76,7 @@ export function usePresets(presetEmUsoId: string | null) {
 			persistir([...presets, novoPreset]);
 			return true;
 			},
-			[presets, presetEmUsoId, persistir],
+			[presets, persistir],
 			);
 
 	const editarPreset = useCallback(
