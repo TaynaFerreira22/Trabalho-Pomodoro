@@ -67,7 +67,9 @@ export const PresetFormModal: React.FC<PresetFormModalProps> = ({
 
   useEffect(() => {
     primeiroCampoRef.current?.focus();
+  }, []);
 
+  useEffect(() => {
     const lidarKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();

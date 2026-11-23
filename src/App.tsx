@@ -39,14 +39,6 @@ export function App() {
     ? session.tempoRestanteMs
     : (presetSelecionado?.tempoFocoMin ?? 0) * 60 * 1000;
 
-  const selecionarPreset = (id: string) => {
-    const preset = presets.presets.find((p) => p.id === id);
-    if (!preset) return;
-
-    presets.selecionarPreset(id);
-    if (session.temSessaoAtiva) session.iniciarSessao(preset);
-  };
-
   const configModal: Record<
     Exclude<TipoConfirmacao, null>,
     {
@@ -103,7 +95,7 @@ export function App() {
             presetSelecionadoId={presetSelecionado?.id ?? null}
             presetEmUsoId={session.presetEmUsoId}
             erro={presets.erroPersistencia}
-            aoSelecionar={selecionarPreset}
+            aoSelecionar={presets.selecionarPreset}
             aoCriar={presets.criarPreset}
             aoEditar={presets.editarPreset}
             aoSolicitarExclusao={() => setConfirmacaoAtiva("excluirPreset")}
