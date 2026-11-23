@@ -1,0 +1,1659 @@
+{
+  "version": "7.0.2",
+  "root": [
+    [
+      90,
+      102
+    ]
+  ],
+  "packageJsons": [
+    "./package.json"
+  ],
+  "fileNames": [
+    "lib.es5.d.ts",
+    "lib.es2015.d.ts",
+    "lib.es2016.d.ts",
+    "lib.es2017.d.ts",
+    "lib.es2018.d.ts",
+    "lib.es2019.d.ts",
+    "lib.es2020.d.ts",
+    "lib.es2021.d.ts",
+    "lib.es2022.d.ts",
+    "lib.es2023.d.ts",
+    "lib.es2024.d.ts",
+    "lib.es2025.d.ts",
+    "lib.esnext.d.ts",
+    "lib.dom.d.ts",
+    "lib.dom.iterable.d.ts",
+    "lib.es2015.core.d.ts",
+    "lib.es2015.collection.d.ts",
+    "lib.es2015.generator.d.ts",
+    "lib.es2015.iterable.d.ts",
+    "lib.es2015.promise.d.ts",
+    "lib.es2015.proxy.d.ts",
+    "lib.es2015.reflect.d.ts",
+    "lib.es2015.symbol.d.ts",
+    "lib.es2015.symbol.wellknown.d.ts",
+    "lib.es2016.array.include.d.ts",
+    "lib.es2016.intl.d.ts",
+    "lib.es2017.arraybuffer.d.ts",
+    "lib.es2017.date.d.ts",
+    "lib.es2017.object.d.ts",
+    "lib.es2017.sharedmemory.d.ts",
+    "lib.es2017.string.d.ts",
+    "lib.es2017.intl.d.ts",
+    "lib.es2017.typedarrays.d.ts",
+    "lib.es2018.asyncgenerator.d.ts",
+    "lib.es2018.asynciterable.d.ts",
+    "lib.es2018.intl.d.ts",
+    "lib.es2018.promise.d.ts",
+    "lib.es2018.regexp.d.ts",
+    "lib.es2019.array.d.ts",
+    "lib.es2019.object.d.ts",
+    "lib.es2019.string.d.ts",
+    "lib.es2019.symbol.d.ts",
+    "lib.es2019.intl.d.ts",
+    "lib.es2020.bigint.d.ts",
+    "lib.es2020.date.d.ts",
+    "lib.es2020.promise.d.ts",
+    "lib.es2020.sharedmemory.d.ts",
+    "lib.es2020.string.d.ts",
+    "lib.es2020.symbol.wellknown.d.ts",
+    "lib.es2020.intl.d.ts",
+    "lib.es2020.number.d.ts",
+    "lib.es2021.promise.d.ts",
+    "lib.es2021.string.d.ts",
+    "lib.es2021.weakref.d.ts",
+    "lib.es2021.intl.d.ts",
+    "lib.es2022.array.d.ts",
+    "lib.es2022.error.d.ts",
+    "lib.es2022.intl.d.ts",
+    "lib.es2022.object.d.ts",
+    "lib.es2022.string.d.ts",
+    "lib.es2022.regexp.d.ts",
+    "lib.es2023.array.d.ts",
+    "lib.es2023.collection.d.ts",
+    "lib.es2023.intl.d.ts",
+    "lib.es2024.arraybuffer.d.ts",
+    "lib.es2024.collection.d.ts",
+    "lib.es2024.object.d.ts",
+    "lib.es2024.promise.d.ts",
+    "lib.es2024.regexp.d.ts",
+    "lib.es2024.sharedmemory.d.ts",
+    "lib.es2024.string.d.ts",
+    "lib.es2025.collection.d.ts",
+    "lib.es2025.float16.d.ts",
+    "lib.es2025.intl.d.ts",
+    "lib.es2025.iterator.d.ts",
+    "lib.es2025.promise.d.ts",
+    "lib.es2025.regexp.d.ts",
+    "lib.esnext.array.d.ts",
+    "lib.esnext.collection.d.ts",
+    "lib.esnext.date.d.ts",
+    "lib.esnext.decorators.d.ts",
+    "lib.esnext.disposable.d.ts",
+    "lib.esnext.error.d.ts",
+    "lib.esnext.intl.d.ts",
+    "lib.esnext.sharedmemory.d.ts",
+    "lib.esnext.temporal.d.ts",
+    "lib.esnext.typedarrays.d.ts",
+    "lib.decorators.d.ts",
+    "lib.decorators.legacy.d.ts",
+    "./src/types/preset.ts",
+    "./src/types/session.ts",
+    "./src/types/task.ts",
+    "./src/types/index.ts",
+    "./src/hooks/usePomodoroSession.ts",
+    "./src/app/layout.tsx",
+    "./src/components/Layout/AppLayout.tsx",
+    "./src/components/Timer/TimerDisplay.tsx",
+    "./src/components/Presets/PresetSelector.tsx",
+    "./src/components/Tasks/TaskPanel.tsx",
+    "./src/components/Common/ConfirmDialog.tsx"
+  ],
+  "fileInfos": [
+    {
+      "version": "16934abaab7026ac114da441aabea1a0",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    "d4306fb2e47f74835e8674ffac07d76f",
+    "e437c5c1302869326c3bb93da85bbbcf",
+    "e4324975a566567b21d350615f1fc6ac",
+    "333b1b9a2a9ac3b8497dba5c63b5ba50",
+    "6cffacd662b6eb5fa7a36aa2ea366bfa",
+    "b4c34f9c23304dbef2d23698637ed638",
+    "e5cb86a5fc491796ecd1d2dd348d208f",
+    "feb6c6fb19cdb246a5d8acb36a6901c7",
+    "9443a7f109277ffaa79d893ed2549995",
+    "793cee405385076e27c24f409659dccd",
+    "09f69c6610266eaee1ac9e3e30df2c71",
+    "62bad718844246b8e17547f37bad6085",
+    {
+      "version": "aae8996e8b5684814785a42cbbefcd79",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    "abad6dd56cc8caf095c165df8124d237",
+    {
+      "version": "926204c28cd3d073865348473ae28d2e",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "f25e42c801b2cb3cf2b39792006a9beb",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "6344b55f26a4e81d9608777dbfb877dd",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "3c0ed28e53d3695b363e256ec1c023fd",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "4c2761daba7f17141c25baa0821ac5da",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b87656acabd63e69379ff6ffcfe52fc7",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "597469522da047a5af5222cc6989f405",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1708ea4d34dc37fadadc63ca01127e80",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "55d97a8c6fbf34a30450a7b1e5f7a298",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "0ee05eb59426d33e374226d8dcfa708b",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "e347c14030993906efcfbb88915b6a05",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b0231263857c9b6a03641acdc9280ceb",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "3b15c4a83b598cacb4067676e6f0abed",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b417d97b7934cef63b1889abec0bbfbf",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "09a6cf4032ebba60ce22a501e663f881",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "2b056277dd138e8f5650fc04e20eaa8d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "e22cc07e3f3cc242ba52fa3f8ea1fc58",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "2c45da767a1bfbb220848df1bc4029e4",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b44c3e0fbaf2130cdcf6ac38b120ffa1",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b612fb5cf8e5d964b92063a75207632a",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "02705151a5e1551b9162a9ed8ab763f7",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "41025e398be9215d32e4337335da8f0b",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "52684c2b1f353a5538e4f275182a54cd",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "6dedb6a4f90d1df3a6fbe5693e44886c",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "ca3f36fe3562c07e0f0d71c2bebd3f6d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "409974d6129befbb8226ddd1c6558568",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "4d9cfde2a1ae1b4925f1f9bc10848e5d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "7e1daecc66dd564144e3bb1a0266b5fd",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "a8e1d9bb35fd0637f2f9fd2b2a54f2ec",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "4f168501772a6543182765bfd5f2fbfe",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "a19c80aad1b2162103496f5ba293a732",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b69afa63cd5d059851c78adb2856ee09",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "ae2fc5d954e9b0f5feee3d481b953c27",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1cfd3091a071d8b6feec15277643bafe",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1da2c1f258970fd3cc91184f69e91a9d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "a0d87491913d843139e0c993650a3235",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "4ef72aa378127e7b7abba915b0110b1e",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "3ec74c6a7d4463f0254db3a74cf75646",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "84c2bdfa470d075526cce6322d81b0b6",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "0b3844c2b8c73e4e1ab91431411cad11",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "4fc71cf4a15b8d99675a31df77f26e07",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "d1b49564ddaeca3df5b6dbae925d2242",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "6a25be566d60ccfc2d6e8b7bfdeefa83",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "8a20e27646985dfd58c57ca6566553dd",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "9969f02ad3cdcbf4f709405cda44167f",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "9c9be4792a7a4f42c15ae7360bf28779",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "8cf777fe00349b71ee9c4b6f3fe7fd19",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "74f96bc192530c9723f572bfff3d3078",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1df91c56b25955c56387426f378173c5",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "38856f70edcd2115c355d96ec77cc09e",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "de8700156c1275465bcd473c28b359aa",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "d47cfdb6ede40518357bb5a4cd7cd9fb",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "6e5773860cd9e5b15e683113f642ab47",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "30ff5fe1682f7fcd629880476ca3c2e0",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "bf23d7d1b40b9015b694ddc2f011752f",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "2cc585d42e2c548f9f24a30a1989fd33",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "713906ce9d332d2242b7f05ed9304be3",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "0219894bfe5042c7e1aa2d22e4a91ed0",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "6009ffff7e43c93318804d2d28e37fe3",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "03be89b227587594fbb50509fc1c2e45",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "b30df52dc24740c0bad7c55c3511df7d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "ab8d3c9b5ed5c2ab8f383607eef439f0",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "d950ec671d0a8e07f3c1a31e94abed86",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1abef2ace5eccb02d60dd73cd5a5ee4c",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "f5f0a3044029d1cc081b5887eb4deb07",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "d57c697f1446940ec4bfe669c962e2c4",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "be41035d7b941482a1e1ae6a5c5dcca5",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "10f7d9da7564f27f8ddf4a162b6da6d3",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "1d0520af549e0c3581f15173cc713ca1",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "d65083f97fd741cff028472563eddb79",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "da7f24f00653ebac660ac1c0821ed33d",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "7cb5ae9e65516ea2235f0721f6aac43c",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "f64453cbf9671f28158677fa5c43967a",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    {
+      "version": "33f317af5428801f944a478d2c1e38e5",
+      "affectsGlobalScope": true,
+      "impliedNodeFormat": 1
+    },
+    "a65f1bfaa4143935477abeaebc76032a",
+    "cb2f85013170eb85d6a27f7822ba1546",
+    "928afffe68f3b710c244307fbdd44ea1",
+    "5cf8b143967a4cae903993dd00c227a9",
+    "9971a77d1dff76800f1bddef72fe49d9",
+    "1c89a4825ecd6ed76d94278d9e0e6dd8",
+    "4326d1654c8b16ae57adc84b7558c98c",
+    "17c00422dcbaf12adf5459c3aeb16efb",
+    "73bd8b323925634c934f8b261ec6b1b4",
+    "2cf42d9f325713ff31e37c928394c392",
+    "0486cf25bd43058aaf640175ec2434db",
+    "8b7dc8d225fddf9745205ebe6cc477ce",
+    "6d07474fda3fa42210d4b87598995d89"
+  ],
+  "fileIdsList": [
+    [
+      95,
+      97,
+      98,
+      99,
+      100,
+      101
+    ],
+    [
+      94
+    ],
+    [
+      91,
+      92,
+      93
+    ],
+    [
+      91
+    ]
+  ],
+  "options": {
+    "allowJs": true,
+    "jsx": 4,
+    "module": 99,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": 4,
+    "esModuleInterop": true
+  },
+  "referencedMap": [
+    [
+      102,
+      1
+    ],
+    [
+      98,
+      2
+    ],
+    [
+      95,
+      2
+    ],
+    [
+      94,
+      3
+    ],
+    [
+      92,
+      4
+    ]
+  ],
+  "semanticDiagnosticsPerFile": [
+    [
+      90,
+      [
+        {
+          "pos": 32,
+          "end": 38,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "next"
+          ]
+        }
+      ]
+    ],
+    [
+      95,
+      [
+        {
+          "pos": 39,
+          "end": 46,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "react"
+          ]
+        }
+      ]
+    ],
+    [
+      96,
+      [
+        {
+          "pos": 30,
+          "end": 36,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "next"
+          ]
+        },
+        {
+          "pos": 72,
+          "end": 90,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "next/font/google"
+          ]
+        },
+        {
+          "pos": 99,
+          "end": 114,
+          "code": 2882,
+          "category": 1,
+          "messageKey": "Cannot_find_module_or_type_declarations_for_side_effect_import_of_0_2882",
+          "messageArgs": [
+            "./globals.css"
+          ]
+        },
+        {
+          "pos": 458,
+          "end": 469,
+          "code": 2304,
+          "category": 1,
+          "messageKey": "Cannot_find_name_0_2304",
+          "messageArgs": [
+            "LayoutProps"
+          ]
+        },
+        {
+          "pos": 493,
+          "end": 603,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 493,
+          "end": 682,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 610,
+          "end": 653,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 663,
+          "end": 670,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 675,
+          "end": 682,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      97,
+      [
+        {
+          "pos": 47,
+          "end": 54,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "react"
+          ]
+        },
+        {
+          "pos": 216,
+          "end": 226,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "topBarSlot",
+            "any"
+          ]
+        },
+        {
+          "pos": 230,
+          "end": 239,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "timerSlot",
+            "any"
+          ]
+        },
+        {
+          "pos": 243,
+          "end": 252,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "tasksSlot",
+            "any"
+          ]
+        },
+        {
+          "pos": 277,
+          "end": 321,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 277,
+          "end": 1350,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 328,
+          "end": 387,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 396,
+          "end": 492,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 503,
+          "end": 552,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 604,
+          "end": 609,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 620,
+          "end": 668,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 680,
+          "end": 686,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 695,
+          "end": 701,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 708,
+          "end": 717,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 804,
+          "end": 909,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 918,
+          "end": 1117,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1148,
+          "end": 1158,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1168,
+          "end": 1284,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1315,
+          "end": 1325,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1332,
+          "end": 1339,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1344,
+          "end": 1350,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      98,
+      [
+        {
+          "pos": 32,
+          "end": 39,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "react"
+          ]
+        },
+        {
+          "pos": 280,
+          "end": 295,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "tempoRestanteMs",
+            "any"
+          ]
+        },
+        {
+          "pos": 299,
+          "end": 308,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "faseAtual",
+            "any"
+          ]
+        },
+        {
+          "pos": 312,
+          "end": 322,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "cicloAtual",
+            "any"
+          ]
+        },
+        {
+          "pos": 326,
+          "end": 345,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "progressoPercentual",
+            "any"
+          ]
+        },
+        {
+          "pos": 771,
+          "end": 822,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 771,
+          "end": 1924,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 829,
+          "end": 897,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 906,
+          "end": 979,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 997,
+          "end": 1019,
+          "code": 7053,
+          "category": 1,
+          "messageKey": "Element_implicitly_has_an_any_type_because_expression_of_type_0_can_t_be_used_to_index_type_1_7053",
+          "messageArgs": [
+            "any",
+            "Record<FaseSessao, string>"
+          ]
+        },
+        {
+          "pos": 1029,
+          "end": 1036,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1045,
+          "end": 1118,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1157,
+          "end": 1164,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1171,
+          "end": 1177,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1185,
+          "end": 1377,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1409,
+          "end": 1415,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1462,
+          "end": 1700,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1709,
+          "end": 1900,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1907,
+          "end": 1913,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1918,
+          "end": 1924,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      99,
+      [
+        {
+          "pos": 54,
+          "end": 139,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 54,
+          "end": 193,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 187,
+          "end": 193,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      100,
+      [
+        {
+          "pos": 49,
+          "end": 155,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 49,
+          "end": 372,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 160,
+          "end": 215,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 244,
+          "end": 249,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 254,
+          "end": 292,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 357,
+          "end": 361,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 364,
+          "end": 372,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      101,
+      [
+        {
+          "pos": 55,
+          "end": 62,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "react"
+          ]
+        },
+        {
+          "pos": 360,
+          "end": 366,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "isOpen",
+            "any"
+          ]
+        },
+        {
+          "pos": 370,
+          "end": 376,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "titulo",
+            "any"
+          ]
+        },
+        {
+          "pos": 380,
+          "end": 388,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "mensagem",
+            "any"
+          ]
+        },
+        {
+          "pos": 454,
+          "end": 465,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "aoConfirmar",
+            "any"
+          ]
+        },
+        {
+          "pos": 469,
+          "end": 479,
+          "code": 7031,
+          "category": 1,
+          "messageKey": "Binding_element_0_implicitly_has_an_1_type_7031",
+          "messageArgs": [
+            "aoCancelar",
+            "any"
+          ]
+        },
+        {
+          "pos": 1005,
+          "end": 1219,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1005,
+          "end": 2280,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 1226,
+          "end": 1318,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1327,
+          "end": 1399,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1427,
+          "end": 1432,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1441,
+          "end": 1501,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1531,
+          "end": 1535,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1544,
+          "end": 1584,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1595,
+          "end": 1798,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1837,
+          "end": 1846,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1857,
+          "end": 2192,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2232,
+          "end": 2241,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2250,
+          "end": 2256,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2263,
+          "end": 2269,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2274,
+          "end": 2280,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ],
+    [
+      102,
+      [
+        {
+          "pos": 61,
+          "end": 68,
+          "code": 2307,
+          "category": 1,
+          "messageKey": "Cannot_find_module_0_or_its_corresponding_type_declarations_2307",
+          "messageArgs": [
+            "react"
+          ]
+        },
+        {
+          "pos": 1042,
+          "end": 1132,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1042,
+          "end": 1180,
+          "code": 2875,
+          "category": 1,
+          "messageKey": "This_JSX_tag_requires_the_module_path_0_to_exist_but_none_could_be_found_Make_sure_you_have_types_fo_2875",
+          "messageArgs": [
+            "react/jsx-runtime"
+          ]
+        },
+        {
+          "pos": 1174,
+          "end": 1180,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1298,
+          "end": 1355,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1620,
+          "end": 1673,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 1742,
+          "end": 1976,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2018,
+          "end": 2027,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2064,
+          "end": 2297,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2387,
+          "end": 2396,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2429,
+          "end": 2672,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2714,
+          "end": 2723,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 2739,
+          "end": 2988,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 3036,
+          "end": 3045,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 3061,
+          "end": 3305,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 3353,
+          "end": 3362,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 3375,
+          "end": 3381,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        },
+        {
+          "pos": 3392,
+          "end": 3398,
+          "code": 7026,
+          "category": 1,
+          "messageKey": "JSX_element_implicitly_has_type_any_because_no_interface_JSX_0_exists_7026",
+          "messageArgs": [
+            "IntrinsicElements"
+          ]
+        }
+      ]
+    ]
+  ],
+  "affectedFilesPendingEmit": [
+    90,
+    96,
+    102,
+    101,
+    97,
+    99,
+    100,
+    98,
+    95,
+    94,
+    91,
+    92,
+    93
+  ]
+}

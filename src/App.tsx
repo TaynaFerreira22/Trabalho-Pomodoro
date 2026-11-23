@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { AppLayout } from "./components/Layout/AppLayout";
 import { TimerDisplay } from "./components/Timer/TimerDisplay";
 import { PresetSelector } from "./components/Presets/PresetSelector";
@@ -22,13 +22,10 @@ export function App() {
   const { tocarAlerta } = useAudioAlert();
 
   const tasks = useTasks();
-  const tarefaAtivaIdRef = useRef<string | null>(tasks.tarefaAtivaId);
-  tarefaAtivaIdRef.current = tasks.tarefaAtivaId;
 
   const aoFinalizarFase = useCallback(() => {
     tocarAlerta();
-    tasks.incrementarPomodoroTarefa(tarefaAtivaIdRef.current);
-  }, [tocarAlerta, tasks]);
+  }, [tocarAlerta]);
 
   const session = usePomodoroSession({ aoFinalizarFase });
   const presets = usePresets(session.presetEmUsoId);
