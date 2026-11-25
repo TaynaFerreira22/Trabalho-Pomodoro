@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { AppLayout } from "./components/Layout/AppLayout";
 import { TimerDisplay } from "./components/Timer/TimerDisplay";
 import { PresetSelector } from "./components/Presets/PresetSelector";
@@ -22,13 +22,10 @@ export function App() {
   const { tocarAlerta } = useAudioAlert();
 
   const tasks = useTasks();
-  const tarefaAtivaIdRef = useRef<string | null>(tasks.tarefaAtivaId);
-  tarefaAtivaIdRef.current = tasks.tarefaAtivaId;
 
   const aoFinalizarFase = useCallback(() => {
     tocarAlerta();
-    tasks.incrementarPomodoroTarefa(tarefaAtivaIdRef.current);
-  }, [tocarAlerta, tasks]);
+  }, [tocarAlerta]);
 
   const session = usePomodoroSession({ aoFinalizarFase });
   const presets = usePresets(session.presetEmUsoId);
@@ -41,14 +38,6 @@ export function App() {
   const tempoExibidoMs = session.temSessaoAtiva
     ? session.tempoRestanteMs
     : (presetSelecionado?.tempoFocoMin ?? 0) * 60 * 1000;
-
-  const selecionarPreset = (id: string) => {
-    const preset = presets.presets.find((p) => p.id === id);
-    if (!preset) return;
-
-    presets.selecionarPreset(id);
-    if (session.temSessaoAtiva) session.iniciarSessao(preset);
-  };
 
   const configModal: Record<
     Exclude<TipoConfirmacao, null>,
@@ -106,7 +95,7 @@ export function App() {
             presetSelecionadoId={presetSelecionado?.id ?? null}
             presetEmUsoId={session.presetEmUsoId}
             erro={presets.erroPersistencia}
-            aoSelecionar={selecionarPreset}
+            aoSelecionar={presets.selecionarPreset}
             aoCriar={presets.criarPreset}
             aoEditar={presets.editarPreset}
             aoSolicitarExclusao={() => setConfirmacaoAtiva("excluirPreset")}
@@ -213,6 +202,7 @@ export function App() {
             aoSelecionarTarefa={tasks.setTarefaAtivaId}
             aoCriarTarefa={(entrada) => tasks.criarTarefa(entrada)}
             aoEditarTarefa={(id, entrada) => tasks.editarTarefa(id, entrada)}
+            aoAlterarEstado={tasks.alterarEstadoTarefa}
             aoAlternarConclusao={tasks.alternarConclusaoTarefa}
             aoExcluirTarefa={tasks.excluirTarefa}
             aoLimparConcluidas={tasks.limparConcluidas}

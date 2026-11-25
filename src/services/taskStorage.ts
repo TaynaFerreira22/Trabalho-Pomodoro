@@ -1,15 +1,18 @@
 import type {
+  EstadoTarefa,
   PrioridadeTarefa,
-  StatusTarefa,
   Tarefa,
 } from "../types/task";
 
-const CHAVE_TAREFAS = "@pomodoro:tarefas:v1";
+// Seção 11.4 / RNF-02: chave obrigatória de persistência das tarefas
+export const CHAVE_TAREFAS = "pomodoro.tarefas";
 
-const STATUS_VALIDOS: ReadonlySet<StatusTarefa> = new Set([
+const ESTADOS_VALIDOS: ReadonlySet<EstadoTarefa> = new Set([
   "backlog",
-  "emAndamento",
+  "aFazer",
+  "emExecucao",
   "concluida",
+  "cancelada",
 ]);
 
 const PRIORIDADES_VALIDAS: ReadonlySet<PrioridadeTarefa> = new Set([
@@ -29,14 +32,22 @@ function normalizarTarefa(raw: unknown): Tarefa | null {
   const item = raw as Record<string, unknown>;
 
   if (typeof item.id !== "string" || item.id.trim() === "") return null;
-  if (typeof item.titulo !== "string" || item.titulo.trim() === "") return null;
+  if (typeof item.titulo !== "string") return null;
 
-  const statusRaw = item.status as StatusTarefa;
-  const status: StatusTarefa = STATUS_VALIDOS.has(statusRaw)
-    ? statusRaw
-    : item.concluida === true
-      ? "concluida"
-      : "backlog";
+  const tituloLimpo = item.titulo.trim();
+  // VR-06: título deve ter entre 1 e 100 caracteres
+  if (tituloLimpo.length < 1 || tituloLimpo.length > 100) return null;
+
+  // VR-07 / Seção 11.3: 5 estados obrigatórios
+  const candidatoEstado = (item.estado ?? item.status) as
+    | EstadoTarefa
+    | undefined;
+  const estado: EstadoTarefa =
+    candidatoEstado && ESTADOS_VALIDOS.has(candidatoEstado)
+      ? candidatoEstado
+      : item.concluida === true
+        ? "concluida"
+        : "backlog";
 
   const prioridadeRaw = item.prioridade as PrioridadeTarefa;
   const prioridade: PrioridadeTarefa = PRIORIDADES_VALIDAS.has(prioridadeRaw)
@@ -67,9 +78,10 @@ function normalizarTarefa(raw: unknown): Tarefa | null {
 
   return {
     id: item.id,
-    titulo: item.titulo.trim(),
+    titulo: tituloLimpo,
     descricao: typeof item.descricao === "string" ? item.descricao : undefined,
-    status,
+    estado,
+    status: estado,
     prioridade,
     pomodorosEstimados,
     pomodorosConcluidos,

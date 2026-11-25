@@ -1,9 +1,9 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ConfirmDialog } from "../Common/ConfirmDialog";
 import type {
   EntradaTarefa,
+  EstadoTarefa,
   PrioridadeTarefa,
-  StatusTarefa,
   Tarefa,
 } from "../../types/task";
 
@@ -14,6 +14,7 @@ export interface TaskPanelProps {
   aoSelecionarTarefa?: (id: string) => void;
   aoCriarTarefa?: (entrada: EntradaTarefa) => void;
   aoEditarTarefa?: (id: string, entrada: EntradaTarefa) => void;
+  aoAlterarEstado?: (id: string, estado: EstadoTarefa) => void;
   aoAlternarConclusao?: (id: string) => void;
   aoExcluirTarefa?: (id: string) => void;
   aoLimparConcluidas?: () => void;
@@ -25,10 +26,25 @@ interface EstadoModalTarefa {
   tarefa?: Tarefa;
 }
 
-const ROTULO_STATUS: Record<StatusTarefa, string> = {
+type ConfirmacaoPendente =
+  | { tipo: "excluir"; tarefa: Tarefa }
+  | { tipo: "limparConcluidas"; quantidade: number }
+  | null;
+
+const ESTADOS_TAREFA: EstadoTarefa[] = [
+  "backlog",
+  "aFazer",
+  "emExecucao",
+  "concluida",
+  "cancelada",
+];
+
+const ROTULO_ESTADO: Record<EstadoTarefa, string> = {
   backlog: "Backlog",
-  emAndamento: "Em andamento",
+  aFazer: "A fazer",
+  emExecucao: "Em execução",
   concluida: "Concluída",
+  cancelada: "Cancelada",
 };
 
 const ROTULO_PRIORIDADE: Record<PrioridadeTarefa, string> = {
@@ -43,6 +59,10 @@ const ESTILO_PRIORIDADE: Record<PrioridadeTarefa, string> = {
   baixa: "bg-slate-100 text-slate-600 border-slate-200",
 };
 
+function obterEstado(tarefa: Tarefa): EstadoTarefa {
+  return tarefa.estado ?? tarefa.status ?? "backlog";
+}
+
 export function TaskPanel({
   tarefas = [],
   tarefaAtivaId = null,
@@ -50,6 +70,7 @@ export function TaskPanel({
   aoSelecionarTarefa,
   aoCriarTarefa,
   aoEditarTarefa,
+  aoAlterarEstado,
   aoAlternarConclusao,
   aoExcluirTarefa,
   aoLimparConcluidas,
@@ -58,17 +79,18 @@ export function TaskPanel({
   const [modalTarefa, setModalTarefa] = useState<EstadoModalTarefa | null>(
     null,
   );
-  const [tarefaParaExcluir, setTarefaParaExcluir] = useState<Tarefa | null>(
-    null,
-  );
+  const [confirmacao, setConfirmacao] = useState<ConfirmacaoPendente>(null);
 
   // RN-12: Valores padrão "backlog" e "media"
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [status, setStatus] = useState<StatusTarefa>("backlog");
+  const [estado, setEstado] = useState<EstadoTarefa>("backlog");
   const [prioridade, setPrioridade] = useState<PrioridadeTarefa>("media");
   const [pomodorosEstimados, setPomodorosEstimados] = useState(1);
   const [erroValidacao, setErroValidacao] = useState<string | null>(null);
+
+  const modalBoxRef = useRef<HTMLDivElement>(null);
+  const tituloInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!modalTarefa) {
@@ -79,21 +101,71 @@ export function TaskPanel({
     if (modalTarefa.modo === "editar" && modalTarefa.tarefa) {
       setTitulo(modalTarefa.tarefa.titulo);
       setDescricao(modalTarefa.tarefa.descricao ?? "");
-      setStatus(modalTarefa.tarefa.status);
+      setEstado(obterEstado(modalTarefa.tarefa));
       setPrioridade(modalTarefa.tarefa.prioridade);
       setPomodorosEstimados(modalTarefa.tarefa.pomodorosEstimados);
     } else {
       setTitulo("");
       setDescricao("");
-      setStatus("backlog");
+      setEstado("backlog");
       setPrioridade("media");
       setPomodorosEstimados(1);
     }
     setErroValidacao(null);
   }, [modalTarefa]);
 
+  // RNF-07: Foco inicial no título, fechar com Escape e travamento de foco com Tab
+  useEffect(() => {
+    if (!modalTarefa) return;
+
+    tituloInputRef.current?.focus();
+
+    const aoTecla = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setModalTarefa(null);
+        setErroValidacao(null);
+        return;
+      }
+
+      if (event.key === "Tab" && modalBoxRef.current) {
+        const focaveis = Array.from(
+          modalBoxRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter((el) => el.offsetParent !== null);
+
+        if (focaveis.length === 0) return;
+
+        const primeiro = focaveis[0];
+        const ultimo = focaveis[focaveis.length - 1];
+
+        if (event.shiftKey) {
+          if (
+            document.activeElement === primeiro ||
+            !modalBoxRef.current.contains(document.activeElement)
+          ) {
+            event.preventDefault();
+            ultimo.focus();
+          }
+        } else {
+          if (
+            document.activeElement === ultimo ||
+            !modalBoxRef.current.contains(document.activeElement)
+          ) {
+            event.preventDefault();
+            primeiro.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", aoTecla);
+    return () => window.removeEventListener("keydown", aoTecla);
+  }, [modalTarefa]);
+
   const totalConcluidas = tarefas.filter(
-    (t) => t.status === "concluida",
+    (t) => obterEstado(t) === "concluida",
   ).length;
   const tarefaEmFoco = tarefas.find((t) => t.id === tarefaAtivaId) ?? null;
 
@@ -110,15 +182,15 @@ export function TaskPanel({
     setErroValidacao(null);
   };
 
-  // VR-06 a VR-08: Validação de campos do formulário de tarefa
+  // VR-06: Título de 1 a 100 caracteres
   const validarFormulario = (): EntradaTarefa | null => {
     const tituloLimpo = titulo.trim();
-    if (!tituloLimpo) {
-      setErroValidacao("Informe um título para a tarefa.");
+    if (tituloLimpo.length < 1) {
+      setErroValidacao("Informe um título para a tarefa (1 a 100 caracteres).");
       return null;
     }
-    if (tituloLimpo.length > 120) {
-      setErroValidacao("O título deve ter no máximo 120 caracteres.");
+    if (tituloLimpo.length > 100) {
+      setErroValidacao("O título deve ter no máximo 100 caracteres.");
       return null;
     }
     if (
@@ -135,7 +207,8 @@ export function TaskPanel({
     return {
       titulo: tituloLimpo,
       descricao: descricao.trim() || undefined,
-      status,
+      estado,
+      status: estado,
       prioridade,
       pomodorosEstimados: Math.floor(pomodorosEstimados),
     };
@@ -155,6 +228,18 @@ export function TaskPanel({
     }
 
     fecharModal();
+  };
+
+  const handleConfirmarDialogo = () => {
+    if (!confirmacao) return;
+
+    if (confirmacao.tipo === "excluir") {
+      aoExcluirTarefa?.(confirmacao.tarefa.id);
+    } else if (confirmacao.tipo === "limparConcluidas") {
+      aoLimparConcluidas?.();
+    }
+
+    setConfirmacao(null);
   };
 
   return (
@@ -218,7 +303,9 @@ export function TaskPanel({
       ) : (
         <ul className="flex flex-col gap-2.5 max-h-[32rem] overflow-y-auto pr-0.5">
           {tarefas.map((tarefa) => {
-            const concluida = tarefa.status === "concluida";
+            const estadoAtual = obterEstado(tarefa);
+            const encerrada =
+              estadoAtual === "concluida" || estadoAtual === "cancelada";
             const estaAtiva = tarefa.id === tarefaAtivaId;
 
             return (
@@ -234,7 +321,7 @@ export function TaskPanel({
                   <div className="flex min-w-0 flex-1 items-start gap-2.5">
                     <input
                       type="checkbox"
-                      checked={concluida}
+                      checked={estadoAtual === "concluida"}
                       onChange={() => aoAlternarConclusao?.(tarefa.id)}
                       aria-label={`Marcar "${tarefa.titulo}" como concluída`}
                       className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
@@ -247,7 +334,7 @@ export function TaskPanel({
                     >
                       <span
                         className={`block text-sm font-medium break-words ${
-                          concluida
+                          encerrada
                             ? "line-through text-slate-400"
                             : "text-slate-800"
                         }`}
@@ -273,7 +360,9 @@ export function TaskPanel({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setTarefaParaExcluir(tarefa)}
+                      onClick={() =>
+                        setConfirmacao({ tipo: "excluir", tarefa })
+                      }
                       aria-label={`Excluir tarefa "${tarefa.titulo}"`}
                       className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
                     >
@@ -291,9 +380,23 @@ export function TaskPanel({
                     >
                       {ROTULO_PRIORIDADE[tarefa.prioridade]}
                     </span>
-                    <span className="rounded-full bg-slate-100 px-2 py-0.5 font-medium text-slate-600">
-                      {ROTULO_STATUS[tarefa.status]}
-                    </span>
+                    <select
+                      aria-label={`Estado da tarefa "${tarefa.titulo}"`}
+                      value={estadoAtual}
+                      onChange={(e) =>
+                        aoAlterarEstado?.(
+                          tarefa.id,
+                          e.target.value as EstadoTarefa,
+                        )
+                      }
+                      className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 font-medium text-slate-700 focus:border-blue-500 focus:outline-none"
+                    >
+                      {ESTADOS_TAREFA.map((chaveEstado) => (
+                        <option key={chaveEstado} value={chaveEstado}>
+                          {ROTULO_ESTADO[chaveEstado]}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <span className="font-medium text-slate-600">
@@ -306,11 +409,17 @@ export function TaskPanel({
         </ul>
       )}
 
+      {/* RN-11 / RF-20: Limpar concluídas passa por ConfirmDialog */}
       {totalConcluidas > 0 && aoLimparConcluidas && (
         <div className="border-t border-slate-100 pt-3">
           <button
             type="button"
-            onClick={aoLimparConcluidas}
+            onClick={() =>
+              setConfirmacao({
+                tipo: "limparConcluidas",
+                quantidade: totalConcluidas,
+              })
+            }
             className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100 transition-colors"
           >
             Limpar concluídas ({totalConcluidas})
@@ -326,7 +435,10 @@ export function TaskPanel({
           aria-labelledby="titulo-modal-tarefa"
           className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4"
         >
-          <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-5 shadow-lg">
+          <div
+            ref={modalBoxRef}
+            className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-5 shadow-lg"
+          >
             <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
               <h3
                 id="titulo-modal-tarefa"
@@ -359,12 +471,13 @@ export function TaskPanel({
                   htmlFor="campo-titulo-tarefa"
                   className="text-xs font-medium text-slate-700"
                 >
-                  Título *
+                  Título * (1 a 100 caracteres)
                 </label>
                 <input
+                  ref={tituloInputRef}
                   id="campo-titulo-tarefa"
                   type="text"
-                  maxLength={120}
+                  maxLength={100}
                   value={titulo}
                   onChange={(e) => {
                     setTitulo(e.target.value);
@@ -398,17 +511,19 @@ export function TaskPanel({
                     htmlFor="campo-status-tarefa"
                     className="text-xs font-medium text-slate-700"
                   >
-                    Status
+                    Estado
                   </label>
                   <select
                     id="campo-status-tarefa"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value as StatusTarefa)}
+                    value={estado}
+                    onChange={(e) => setEstado(e.target.value as EstadoTarefa)}
                     className="rounded-lg border border-slate-300 px-2.5 py-2 text-xs text-slate-800 focus:border-blue-500 focus:outline-none"
                   >
-                    <option value="backlog">Backlog</option>
-                    <option value="emAndamento">Em andamento</option>
-                    <option value="concluida">Concluída</option>
+                    {ESTADOS_TAREFA.map((chaveEstado) => (
+                      <option key={chaveEstado} value={chaveEstado}>
+                        {ROTULO_ESTADO[chaveEstado]}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -475,20 +590,25 @@ export function TaskPanel({
         </div>
       )}
 
-      {/* RN-11: Reutilização de ConfirmDialog na exclusão de tarefas */}
+      {/* RN-11 / RF-20: ConfirmDialog para exclusão unitária e limpeza em lote */}
       <ConfirmDialog
-        isOpen={tarefaParaExcluir !== null}
-        titulo="Excluir Tarefa?"
-        mensagem={`Deseja realmente excluir a tarefa "${tarefaParaExcluir?.titulo ?? ""}"? Esta ação não pode ser desfeita.`}
-        textoConfirmar="Excluir"
+        isOpen={confirmacao !== null}
+        titulo={
+          confirmacao?.tipo === "excluir"
+            ? "Excluir Tarefa?"
+            : "Limpar Tarefas Concluídas?"
+        }
+        mensagem={
+          confirmacao?.tipo === "excluir"
+            ? `Deseja realmente excluir a tarefa "${confirmacao.tarefa.titulo}"? Esta ação não pode ser desfeita.`
+            : `Deseja realmente remover ${confirmacao?.quantidade ?? 0} tarefa(s) concluída(s)? Esta ação não pode ser desfeita.`
+        }
+        textoConfirmar={
+          confirmacao?.tipo === "excluir" ? "Excluir" : "Limpar"
+        }
         variante="perigo"
-        aoConfirmar={() => {
-          if (tarefaParaExcluir) {
-            aoExcluirTarefa?.(tarefaParaExcluir.id);
-          }
-          setTarefaParaExcluir(null);
-        }}
-        aoCancelar={() => setTarefaParaExcluir(null)}
+        aoConfirmar={handleConfirmarDialogo}
+        aoCancelar={() => setConfirmacao(null)}
       />
     </aside>
   );
