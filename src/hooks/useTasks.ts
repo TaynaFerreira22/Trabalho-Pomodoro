@@ -3,7 +3,7 @@ import {
   carregarTarefasStorage,
   salvarTarefasStorage,
 } from "../services/taskStorage";
-import type { EntradaTarefa, Tarefa } from "../types/task";
+import type { EntradaTarefa, EstadoTarefa, Tarefa } from "../types/task";
 import { ordenarTarefasFixo } from "../utils/taskSort";
 
 function gerarIdTarefa(): string {
@@ -11,6 +11,15 @@ function gerarIdTarefa(): string {
     return crypto.randomUUID();
   }
   return `tarefa-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function tituloValido(titulo: string): boolean {
+  const tamanho = titulo.trim().length;
+  return tamanho >= 1 && tamanho <= 100;
+}
+
+function estadoDaTarefa(tarefa: Tarefa): EstadoTarefa {
+  return tarefa.estado ?? tarefa.status ?? "backlog";
 }
 
 export function useTasks() {
@@ -22,7 +31,9 @@ export function useTasks() {
   const [tarefaAtivaId, setTarefaAtivaId] = useState<string | null>(() => {
     if (!estadoInicial.sucesso) return null;
     const ordenadas = ordenarTarefasFixo(estadoInicial.dados);
-    return ordenadas.find((t) => t.status !== "concluida")?.id ?? null;
+    return (
+      ordenadas.find((t) => estadoDaTarefa(t) !== "concluida")?.id ?? null
+    );
   });
   const [erroPersistencia, setErroPersistencia] = useState<string | null>(
     estadoInicial.sucesso ? null : (estadoInicial.erro ?? null),
@@ -42,15 +53,19 @@ export function useTasks() {
 
   const criarTarefa = useCallback((entrada: EntradaTarefa): Tarefa | null => {
     const tituloLimpo = entrada.titulo.trim();
-    if (!tituloLimpo) return null;
+    if (!tituloValido(tituloLimpo)) return null;
 
     const agora = Date.now();
-    // RN-12: Valores padrão "backlog" e "media"
+    // RN-12: valores padrão "backlog" e "media"
+    const estadoInicialTarefa: EstadoTarefa =
+      entrada.estado ?? entrada.status ?? "backlog";
+
     const novaTarefa: Tarefa = {
       id: gerarIdTarefa(),
       titulo: tituloLimpo,
       descricao: entrada.descricao?.trim() || undefined,
-      status: entrada.status ?? "backlog",
+      estado: estadoInicialTarefa,
+      status: estadoInicialTarefa,
       prioridade: entrada.prioridade ?? "media",
       pomodorosEstimados: Math.max(
         1,
@@ -63,7 +78,7 @@ export function useTasks() {
 
     setTarefasBrutas((prev) => [...prev, novaTarefa]);
     setTarefaAtivaId((atual) =>
-      atual ?? (novaTarefa.status !== "concluida" ? novaTarefa.id : null),
+      atual ?? (estadoInicialTarefa !== "concluida" ? novaTarefa.id : null),
     );
 
     return novaTarefa;
@@ -71,14 +86,16 @@ export function useTasks() {
 
   const editarTarefa = useCallback((id: string, entrada: EntradaTarefa) => {
     const tituloLimpo = entrada.titulo.trim();
-    if (!tituloLimpo) return;
+    if (!tituloValido(tituloLimpo)) return;
 
     const agora = Date.now();
     setTarefasBrutas((prev) =>
       prev.map((tarefa) => {
         if (tarefa.id !== id) return tarefa;
 
-        const proximoStatus = entrada.status ?? tarefa.status;
+        const proximoEstado: EstadoTarefa =
+          entrada.estado ?? entrada.status ?? estadoDaTarefa(tarefa);
+
         return {
           ...tarefa,
           titulo: tituloLimpo,
@@ -86,7 +103,8 @@ export function useTasks() {
             entrada.descricao !== undefined
               ? entrada.descricao.trim() || undefined
               : tarefa.descricao,
-          status: proximoStatus,
+          estado: proximoEstado,
+          status: proximoEstado,
           prioridade: entrada.prioridade ?? tarefa.prioridade,
           pomodorosEstimados:
             entrada.pomodorosEstimados !== undefined
@@ -98,15 +116,33 @@ export function useTasks() {
     );
   }, []);
 
+  const alterarEstadoTarefa = useCallback((id: string, novoEstado: EstadoTarefa) => {
+    const agora = Date.now();
+    setTarefasBrutas((prev) =>
+      prev.map((tarefa) =>
+        tarefa.id === id
+          ? {
+              ...tarefa,
+              estado: novoEstado,
+              status: novoEstado,
+              atualizadaEm: agora,
+            }
+          : tarefa,
+      ),
+    );
+  }, []);
+
   const alternarConclusaoTarefa = useCallback((id: string) => {
     const agora = Date.now();
     setTarefasBrutas((prev) =>
       prev.map((tarefa) => {
         if (tarefa.id !== id) return tarefa;
-        const concluindo = tarefa.status !== "concluida";
+        const concluindo = estadoDaTarefa(tarefa) !== "concluida";
+        const proximoEstado: EstadoTarefa = concluindo ? "concluida" : "backlog";
         return {
           ...tarefa,
-          status: concluindo ? "concluida" : "backlog",
+          estado: proximoEstado,
+          status: proximoEstado,
           atualizadaEm: agora,
         };
       }),
@@ -137,12 +173,17 @@ export function useTasks() {
 
   const limparConcluidas = useCallback(() => {
     setTarefasBrutas((prev) => {
-      const restantes = prev.filter((tarefa) => tarefa.status !== "concluida");
+      const restantes = prev.filter(
+        (tarefa) => estadoDaTarefa(tarefa) !== "concluida",
+      );
       setTarefaAtivaId((atual) =>
-        restantes.some((t) => t.id === atual && t.status !== "concluida")
+        restantes.some(
+          (t) => t.id === atual && estadoDaTarefa(t) !== "concluida",
+        )
           ? atual
-          : (ordenarTarefasFixo(restantes).find((t) => t.status !== "concluida")
-              ?.id ?? null),
+          : (ordenarTarefasFixo(restantes).find(
+              (t) => estadoDaTarefa(t) !== "concluida",
+            )?.id ?? null),
       );
       return restantes;
     });
@@ -161,6 +202,7 @@ export function useTasks() {
     setTarefaAtivaId,
     criarTarefa,
     editarTarefa,
+    alterarEstadoTarefa,
     alternarConclusaoTarefa,
     excluirTarefa,
     incrementarPomodoroTarefa,

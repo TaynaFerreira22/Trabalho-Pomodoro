@@ -202,6 +202,7 @@ export function App() {
             aoSelecionarTarefa={tasks.setTarefaAtivaId}
             aoCriarTarefa={(entrada) => tasks.criarTarefa(entrada)}
             aoEditarTarefa={(id, entrada) => tasks.editarTarefa(id, entrada)}
+            aoAlterarEstado={tasks.alterarEstadoTarefa}
             aoAlternarConclusao={tasks.alternarConclusaoTarefa}
             aoExcluirTarefa={tasks.excluirTarefa}
             aoLimparConcluidas={tasks.limparConcluidas}
